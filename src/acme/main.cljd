@@ -1,0 +1,39 @@
+(ns acme.main
+  (:require [acme.counter :as counter]
+    ["package:flutter/material.dart" :as m]
+    ["package:flutter/widgets.dart" :as w]
+    #_ ["package:flutter/foundation.dart" :as foundation]
+    [clojure.walk :as walk]
+    [tiltontec.util.base :refer [dprn dp dpx]]
+    [tiltontec.flutter-mx.core :as fx]
+    #_ [cljd.flutter :as f]))
+
+
+(defn main []
+  (.ensureInitialized w/WidgetsFlutterBinding)
+  ;;(set! r/debugPaintSizeEnabled true)
+
+  (fx/run-app
+    (fx/fx-render nil
+      ;; Change the namespace below and rebuild to see a different example.
+      (counter/make-app)))
+
+  ;; ??? (w/debugDumpApp)
+  )
+
+#_
+(defn main []
+  (f/run
+    (m/MaterialApp
+      .title "Welcome to Flutter"
+      .theme (m/ThemeData .primarySwatch m.Colors/pink))
+    .home
+    (m/Scaffold
+      .appBar (m/AppBar
+                .title (m/Text "Welcome to ClojureDart")))
+    .body
+    m/Center
+    (m/Text "Let's get coding!"
+      .style (m/TextStyle
+               .color m.Colors/red
+               .fontSize 32.0))))
