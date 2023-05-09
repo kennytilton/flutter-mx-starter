@@ -12,8 +12,10 @@ Start the internal name change, from "acme":
 ```bash
 mv src/acme src/unicorn
 ```
-Now edit the source globally replacing "acme" with "unicorn".
-
+Now edit the source globally replacing "acme" with "unicorn":
+```bash
+find . -type f -exec sed -i '' 's/acme/unicorn/g' {} +
+```
 When that ^^^ is done:
 ```bash
 clj -M:cljd init
