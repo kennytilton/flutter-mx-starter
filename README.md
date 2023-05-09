@@ -12,7 +12,7 @@ To create your own:
 * clj -M:cljd init
 
 To test:
-* open -A Simulatore
+* open -a Simulator
 * clj -M:cljd flutter
 
 Now to get `git` back into the picture:
