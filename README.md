@@ -2,7 +2,13 @@
 
 A repo to get you started with your own app using [ClojureDart](https://github.com/Tensegritics/ClojureDart) and [Flutter/Mx](https://github.com/kennytilton/flutter-mx).
 
-To create your own clone locally, to your desired project name, here "unicorn":
+## Prerequisites
+
+Steps #1 and #2 in this [CLJD Quick Start](https://github.com/Tensegritics/ClojureDart/blob/main/doc/flutter-quick-start.md) to get you rocking on Flutter tooling
+
+## Clone
+
+Clone this repo locally, changing to your desired project name, here "unicorn":
 ```bash
 git clone https://github.com/kennytilton/flutter-mx-starter.git unicorn
 cd unicorn
