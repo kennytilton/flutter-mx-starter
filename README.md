@@ -1,17 +1,23 @@
-# cljd_flutter_mx_starter
+# Flutter/MX Starter
 
-A new Flutter project.
+A repo to get you started with your own app using [ClojureDart](https://github.com/Tensegritics/ClojureDart) and [Flutter/Mx](https://github.com/kennytilton/flutter-mx).
 
-## Getting Started
+To create your own:
 
-This project is a starting point for a Flutter application.
+* git clone https://github.com/kennytilton/flutter-mx-starter.git unicorn
+* cd unicorn
+* rm -rf .git
+* mv src/acme src/unicorn
+* edit the source globally replacing "acme" with "unicorn"
+* clj -M:cljd init
 
-A few resources to get you started if this is your first Flutter project:
+To test:
+* open -a Simulator
+* clj -M:cljd flutter
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Now to get `git` back into the picture:
+* git init
+* git add README.md clean.sh deps.edn lib/main.dart pubspec.* src test
+* git commit -am "clone from starter"
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# flutter-mx-starter
+Look for @kennytilton in the #matrix or #clojuredart channels on the #Clojurians Slack and I will help you get going.
