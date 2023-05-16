@@ -2,12 +2,8 @@
   (:require [acme.counter :as counter]
     ["package:flutter/material.dart" :as m]
     ["package:flutter/widgets.dart" :as w]
-    #_ ["package:flutter/foundation.dart" :as foundation]
     [clojure.walk :as walk]
-    [tiltontec.util.base :refer [dprn dp dpx]]
-    [tiltontec.flutter-mx.core :as fx]
-    #_ [cljd.flutter :as f]))
-
+    [tiltontec.flutter-mx.core :as fx]))
 
 (defn main []
   (.ensureInitialized w/WidgetsFlutterBinding)
