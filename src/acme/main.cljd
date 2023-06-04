@@ -1,5 +1,6 @@
 (ns acme.main
-  (:require [acme.counter :as counter]
+  (:require
+    [acme.hello-world :as hello]
     ["package:flutter/material.dart" :as m]
     ["package:flutter/widgets.dart" :as w]
     [clojure.walk :as walk]
@@ -12,7 +13,7 @@
   (fx/run-app
     (fx/fx-render nil
       ;; Change the namespace below and rebuild to see a different example.
-      (counter/make-app)))
+      (hello/make-app)))
 
   ;; ??? (w/debugDumpApp)
   )
