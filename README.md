@@ -12,7 +12,7 @@ Once we have that running, we will build the classic Flutter Counter app, which 
 
 ### Prerequisites
 
-Steps #1 and #2 in this [CLJD Quick Start](https://github.com/Tensegritics/ClojureDart/blob/main/doc/flutter-quick-start.md) to get you rocking on Flutter tooling
+Steps #1 and #2 in this [CLJD Quick Start](https://github.com/Tensegritics/ClojureDart/blob/main/doc/flutter-quick-start.md) to get you rocking on ClojureDart and Flutter development in general.
 
 ### Clone
 
