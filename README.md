@@ -39,7 +39,7 @@ clj -M:cljd init
 open -a Simulator
 clj -M:cljd flutter
 ```
-You should now see the.
+You should now see Mr. Kernighan and the app on your sim.
 
 Now to get `git` back into the picture:
 ```bash
