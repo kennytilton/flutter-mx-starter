@@ -1,6 +1,14 @@
 # Flutter/MX Starter
 
-A repo to get you started with your own app using [ClojureDart](https://github.com/Tensegritics/ClojureDart) and [Flutter/Mx](https://github.com/kennytilton/flutter-mx).
+A starter/instructional repo to get you started with your own app using [ClojureDart](https://github.com/Tensegritics/ClojureDart) and [Flutter/Mx](https://github.com/kennytilton/flutter-mx).
+
+This repo out of the box will run this "Hello, world." app, a display-only exercise:
+
+<img src="https://github.com/kennytilton/flutter-mx/blob/main/image/HW%20d%20Sim.png" width="240">
+
+That is Brian Kernighan, popularizer of the "Hello, world." app/instructional approach.
+
+Once we have that running, we will build the classic Flutter Counter app, which introduces a control and reactive state.
 
 ### Prerequisites
 
