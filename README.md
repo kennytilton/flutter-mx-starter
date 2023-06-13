@@ -28,7 +28,7 @@ mv src/acme src/unicorn
 ```
 Now edit the source globally replacing "acme" with "unicorn":
 ```bash
-find . -type f -exec sed -i '' 's/acme/unicorn/g' {} +
+find . -type f -exec sh -c 'file -b "$1" | grep -q ASCII' sh {} \; -exec sed -i '' 's/acme/unicorn/g' {} +
 ```
 When that ^^^ is done, initialize the project, BUT ignore the final instructions on how "to run your application":
 ```bash
@@ -39,7 +39,7 @@ clj -M:cljd init
 open -a Simulator
 clj -M:cljd flutter
 ```
-You should now see the standard Flutter "counter" app used as a "Hello, world" in Flutter.
+You should now see Mr. Kernighan and the app on your sim.
 
 Now to get `git` back into the picture:
 ```bash
