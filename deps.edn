@@ -5,7 +5,7 @@
 
         kennytilton/flutter-mx
         {:git/url "https://github.com/kennytilton/flutter-mx.git"
-         :sha "d171d6bbeb5a2b5de2c98411bfaa9319d9257cdc"
+         :sha "e120a7be3181d6d094b5ccb17c2bd137d92b9218"
          }}
  :aliases {:cljd {:main-opts ["-m" "cljd.build"]}}
  :cljd/opts {:kind :flutter
