@@ -1,34 +1,39 @@
 (ns acme.hello-world
-    (:require
-      [clojure.string :as str]
-      [tiltontec.matrix.api :refer [cF mget]]
-      [tiltontec.flutter-mx.core :as fx
-       :refer [scaffold app-bar text center column hero material-app]]
-      ["package:flutter/widgets.dart" :as w]
-      ["package:flutter/material.dart" :as m]
-      ["package:flutter/painting.dart" :as p]))
+  (:require
+    [clojure.string :as str]
+    [tiltontec.matrix.api :refer [cF mget]]
+    [tiltontec.flutter-mx.core :as fx
+     :refer [scaffold app-bar text center column hero material-app]]
+    ["package:flutter/widgets.dart" :as w]
+    ["package:flutter/material.dart" :as m]
+    ["package:flutter/painting.dart" :as p]))
 
 (defn make-app []
-      (material-app
-        {:title                      "Flutter/MX Hello World, Teal"
-         :debugShowCheckedModeBanner false
-         :theme                      (m/ThemeData .primarySwatch m.Colors/teal)}
-        (scaffold
-          {:appBar (app-bar
-                     {:title (m/Text "Welcome to Flutter/MX")})}
-          (center
-            (column
-              {:mainAxisAlignment m.MainAxisAlignment/spaceEvenly}
-              (text {:overflow p.TextOverflow/ellipsis
-                     :style    (p/TextStyle
-                                 .color m.Colors/cyan
-                                 .fontSize 32.0)}
-                    "hello, world\\n")
-              (hero {:tag "imageHero"}
-                    (m/Image .image (m/AssetImage "image/kernighan.jpeg")
-                             .height 512))
-              (text {:overflow p.TextOverflow/ellipsis
-                     :style    (p/TextStyle
-                                 .color m.Colors/cyan
-                                 .fontSize 16.0)}
-                    "Brian Kernighan"))))))
+  (material-app                                             ;; f/mx constructors are in kebab-case
+    ;; a map as the first argument to an f/mx material-app
+    ;; specifies properties passed through to the native MaterialApp widget
+    {:title "F/MX Hello World"                              ;; f/mx props are specified with keywords, not .title
+     :theme (m/ThemeData                                    ;; native constructors are in camel case
+              .primarySwatch m.Colors/teal)}                ;; native props are NOT keywords
+    ;; a twist: material-app treats its one child as .home
+    (scaffold
+      {:appBar (app-bar                                     ;; the native prop is a keyword, but camelCase
+                 {:title (m/Text "Welcome to Flutter/MX")})}
+      ;; a twist: the f/mx scaffold treats its one child as .body
+      (center
+        (column
+          {:mainAxisAlignment m.MainAxisAlignment/spaceEvenly}
+          ;; all forms after the property map become .children of the native Column
+          (text {:style (hello-text-style 32)} ;; a function can generate native Flutter objects
+            ;; a twist: the one "child" of an f/mx text becomes the first parameter to (m/Text <child 1>)
+            "hello, world\\n")
+          (hero {:tag "imageHero"}
+            (m/Image .image (m/AssetImage "image/kernighan.jpeg")
+              .height 512))
+          (text {:style (hello-text-style 20)}
+            "Brian Kernighan"))))))
+
+(defn hello-text-style [size]
+  (p/TextStyle
+    .color m.Colors/black
+    .fontSize size))
