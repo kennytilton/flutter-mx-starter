@@ -8,9 +8,9 @@ This repo out of the box will run this "Hello, world." app, a display-only exerc
 
 That is Brian Kernighan, popularizer of the "Hello, world." app/instructional approach.
 
-Once we have that running, we will go through the source code in detail. This review will be aimed at complete beginners with `f/mx`, either Clojurians or Flutteristas. The highlight will be seeing how native Flutter constructors can be combined with `f/mx` widgets, and especially how we use syntax to make the mixture more readable.
+Once we have that running, we will go through the source code in detail, with complete `f/mx` beginners in mind, be they Clojurians or Flutteristas. The highlight will be how native Flutter constructors can be combined with `f/mx` widgets, and especially how we use syntax to make that mixture more readable.
 
-Then we build something from scratch, viz. the classic Flutter Counter app, where we learn to use a UI control and see a bit of reactive state.
+Next, we will build something from scratch, viz. the classic Flutter Counter app. That will introduce our first UI control and a bit of reactive state, our first encounter with Matrix (MX) state management.
 
 With that under your belt, you should be able to get rolling on your own Unicorn, with help as always from `@kennytilton` on the Clojurians Slack, in #matrix or #clojuredart.
 
