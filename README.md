@@ -1,6 +1,6 @@
 # Flutter/MX Starter
 
-A starter/instructional repo to get you started with your own app using [ClojureDart](https://github.com/Tensegritics/ClojureDart) and [Flutter/Mx](https://github.com/kennytilton/flutter-mx).
+A starter/instructional repo to help get you started on your own app using [ClojureDart](https://github.com/Tensegritics/ClojureDart) and [Flutter/Mx](https://github.com/kennytilton/flutter-mx).
 
 This repo out of the box will run this "Hello, world." app, a display-only exercise:
 
@@ -8,7 +8,11 @@ This repo out of the box will run this "Hello, world." app, a display-only exerc
 
 That is Brian Kernighan, popularizer of the "Hello, world." app/instructional approach.
 
-Once we have that running, we will build the classic Flutter Counter app, which introduces a control and reactive state.
+Once we have that running, we will go through the source code in detail. This review will be aimed at complete beginners with `f/mx`, either Clojurians or Flutteristas. The highlight will be seeing how native Flutter constructors can be combined with `f/mx` widgets, and especially how we use syntax to make the mixture more readable.
+
+Then we build something from scratch, viz. the classic Flutter Counter app, where we learn to use a UI control and see a bit of reactive state.
+
+With that under your belt, you should be able to get rolling on your own Unicorn, with help as always from `@kennytilton` on the Clojurians Slack, in #matrix or #clojuredart.
 
 ### Prerequisites
 
