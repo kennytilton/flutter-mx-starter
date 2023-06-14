@@ -1,34 +1,42 @@
 (ns acme.hello-world
   (:require
-    [clojure.string :as str]
-    [tiltontec.matrix.api :refer [cF mget]]
     [tiltontec.flutter-mx.core :as fx
-     :refer [scaffold app-bar text center column hero material-app]]
+     :refer [scaffold app-bar text center column material-app]]
     ["package:flutter/widgets.dart" :as w]
     ["package:flutter/material.dart" :as m]
     ["package:flutter/painting.dart" :as p]))
 
-(defn make-app []
+;;; --- cf. ----
+;;; Check this repo's README.md for a narrative review of this code, and for
+;;; detailed discussion of building the classic Flutter Counter app from scratch, where
+;;; we will encounter Matrix (MX) state mangement for the first time.
+
+;;; --- n.b. ---
+;;; keep your eye out below for things documented as "a twist". These are where we
+;;; violate the principle of least surprise to make the f/mx API cleaner.
+
+(defn make-app []                                           ;; See the main function in main.cljd.
   (material-app                                             ;; f/mx constructors are in kebab-case
-    ;; a map as the first argument to an f/mx material-app
-    ;; specifies properties passed through to the native MaterialApp widget
+    ;; A map as the first argument to an f/mx constructor, the case here,
+    ;; specifies properties that will be passed through to the native widget, here m/AmterialApp.
     {:title "F/MX Hello World"                              ;; f/mx props are specified with keywords, not .title
-     :theme (m/ThemeData                                    ;; native constructors are in camel case
-              .primarySwatch m.Colors/teal)}                ;; native props are NOT keywords
+     :theme (m/ThemeData                                    ;; Native constructors are in camel case
+              .primarySwatch m.Colors/teal)}                ;; Native props stay camelCase
     ;; a twist: material-app treats its one child as .home
     (scaffold
-      {:appBar (app-bar                                     ;; the native prop is a keyword, but camelCase
+      {:appBar (app-bar                                     ;; keyword yes, but camelCase, not kebab-case
                  {:title (m/Text "Welcome to Flutter/MX")})}
       ;; a twist: the f/mx scaffold treats its one child as .body
       (center
         (column
           {:mainAxisAlignment m.MainAxisAlignment/spaceEvenly}
           ;; all forms after the property map become .children of the native Column
-          (text {:style (hello-text-style 32)} ;; a function can generate native Flutter objects
+          (text {:style (hello-text-style 32)}              ;; a function can generate native Flutter objects
             ;; a twist: the one "child" of an f/mx text becomes the first parameter to (m/Text <child 1>)
             "hello, world\\n")
-          (hero {:tag "imageHero"}
-            (m/Image .image (m/AssetImage "image/kernighan.jpeg")
+          (fx/hero {:tag "imageHero"}                       ;; use the `fx/` alias for widgets not referred ^^
+            (m/Image                                        ;; native Flutter Image widget is fine as the child of f/mx hero.
+              .image (m/AssetImage "image/kernighan.jpeg")
               .height 512))
           (text {:style (hello-text-style 20)}
             "Brian Kernighan"))))))
