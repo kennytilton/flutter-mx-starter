@@ -68,7 +68,7 @@ Get the latest SHA from [the f/mx repo](https://github.com/kennytilton/flutter-m
 
         kennytilton/flutter-mx
         {:git/url "https://github.com/kennytilton/flutter-mx.git"
-         :sha "a6cd31d44507bf81c6baf038e344bd0605955154"}} <================= COPY NEW F/MX SHA HERE
+         :sha "37f23d85d18310e2e0391a9b0ebf1d52f72d4aa0"}} <================= COPY NEW F/MX SHA HERE
  :aliases {:cljd {:main-opts ["-m" "cljd.build"]}}
  :cljd/opts {:kind :flutter
              :main unicorn.main}}
