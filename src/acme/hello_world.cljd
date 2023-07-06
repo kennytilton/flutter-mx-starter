@@ -1,6 +1,6 @@
 (ns acme.hello-world
   (:require
-    [tiltontec.flutter-mx.core :as fx
+    [tilton.fmx.core :as fx
      :refer [scaffold app-bar text center column material-app]]
     ["package:flutter/widgets.dart" :as w]
     ["package:flutter/material.dart" :as m]

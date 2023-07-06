@@ -1,7 +1,7 @@
 (ns acme.main
   (:require
     ["package:flutter/widgets.dart" :as w]
-    [tiltontec.flutter-mx.core :as fx]
+    [tilton.fmx.core :as fx]
     [acme.hello-world :as hello]))
 
 (defn main []
