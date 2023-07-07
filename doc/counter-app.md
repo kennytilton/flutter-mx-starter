@@ -46,20 +46,22 @@ If we look at the project `main` function, we see that things are set up already
 ```
 Unwinding that:
 * `hello/make-app` builds a Flutter/MX proxy for a Flutter "Hello, world" app;
-* `fx/fx-render` generates a real Flutter app from the `f/mx` proxy; and
+* `fx/fx-render` generates a real Flutter app (or widget) from the `f/mx` proxy; and
 * `fx/run-app` invokes `m/runApp`, after wrapping our app in an anonymous stateless container, the role played by `MyApp` above.
 
+Worth noting:
+* `(.ensuredInitialzed w/WidgetsFlutterBinding)` is much like the native Dart `WidgetsFlutterBinding.ensureInitialized()`;
+* the `w/` prefix references the alias established by `["package:flutter/widgets.dart" :as w]`. Clojure source files handle such linkage individually;
+* the method invocation syntax is `(method class arguments*)` instead of `class.method( arguments*)`;
+* standard CLJD interop preserves the camelCase; but
+* `f/mx` wrappers `run-app` uses Lisp kebab case by convention.
+  
 So now we just need to build a proxy for a `MaterialApp`.
 
 #### Replicating `MaterialApp`
+We can use `hello_world.app` as our starting point. We will leave the original "Hello, world." app as is, and build our Counter app alongside it.
 
-
-
-#### Step 1: Create a new file/namespace for our app.
-
-We will leave the original "Hello, world." app as is, and build our Counter app alongside it. 
-
-1. Use your chosen IDE to create a new file `counter.cljd` alongside `hello_world.cljd`.
+1. Create a new file/namespace for our app. Use your chosen IDE to create a new file `counter.cljd` alongside `hello_world.cljd`.
 2. Replace any automatically generated content of `counter.cljd` with the contents of `hello_world.cljd`.
 3. Restore the `ns` name `counter-app.counter`.
 4. Delete the function `make-app`.
