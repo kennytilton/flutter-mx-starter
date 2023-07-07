@@ -73,5 +73,8 @@ Get the latest SHA from [the f/mx repo](https://github.com/kennytilton/flutter-m
  :cljd/opts {:kind :flutter
              :main unicorn.main}}
 ```
-## Support
+### Next step
+Now let us build a second "app" from scratch, a [Flutter/MX implementation](https://github.com/kennytilton/flutter-mx-starter/blob/main/doc/counter-app.md) of the classic Flutter Counter app.
+
+### Support
 Look for @kennytilton in the #matrix or #clojuredart channels on the #Clojurians Slack and I will help you get going.
