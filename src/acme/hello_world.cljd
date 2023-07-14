@@ -1,7 +1,18 @@
 (ns acme.hello-world
+  ;; this 'ns' namespace declaration must patch the file's location, except
+  ;; Java naming gets converted to Lispy kebab-case.
+  ;; The CLD compiler will thus expect a file named acme/hello_world.cljd to
+  ;; exist under a directory named in the :paths property of deps.edn.
+  ;;
   (:require
     [tilton.fmx.api :as fx
+     ;; :as establishes an alias we can use in this source file, such as
+     ;; in an (fx/hero ...) reference below.
+     ;; The :refers option lets us use symbols without the alias prefix.
      :refer [scaffold app-bar text center column material-app]]
+    ;;
+    ;; Next we gain access for this source file to native Dart packages,
+    ;; which will be referenced via the aliases shown and CLJD/Dart interop.
     ["package:flutter/widgets.dart" :as w]
     ["package:flutter/material.dart" :as m]
     ["package:flutter/painting.dart" :as p]))
@@ -9,7 +20,7 @@
 ;;; --- cf. ----
 ;;; Check this repo's README.md for a narrative review of this code, and for
 ;;; detailed discussion of building the classic Flutter Counter app from scratch, where
-;;; we will encounter Matrix (MX) state mangement for the first time.
+;;; we will encounter Matrix (MX) state management for the first time.
 
 ;;; --- n.b. ---
 ;;; keep your eye out below for things documented as "a twist". These are where we
@@ -21,18 +32,18 @@
     ;; specifies properties that will be passed through to the native widget, here m/AmterialApp.
     {:title "F/MX Hello World"                              ;; f/mx props are specified with keywords, not .title
      :theme (m/ThemeData                                    ;; Native constructors are in camel case
-              .primarySwatch m.Colors/teal)}                ;; Native props stay camelCase
-    ;; a twist: material-app treats its one child as .home
+              .primarySwatch m.Colors/teal)}                ;; Native props use dot notation for keys
+    ;; a TWIST: material-app treats its one child as .home
     (scaffold
       {:appBar (app-bar                                     ;; keyword yes, but camelCase, not kebab-case
                  {:title (m/Text "Welcome to Flutter/MX")})}
-      ;; a twist: the f/mx scaffold treats its one child as .body
+      ;; a TWIST: the f/mx scaffold treats its one child as .body
       (center
         (column
           {:mainAxisAlignment m.MainAxisAlignment/spaceEvenly}
-          ;; all forms after the property map become .children of the native Column
+          ;; all forms following the above property map become .children of the f/mx column
           (text {:style (hello-text-style 32)}              ;; a function can generate native Flutter objects
-            ;; a twist: the one "child" of an f/mx text becomes the first parameter to (m/Text <child 1>)
+            ;; a TWIST: the one "child" of an f/mx text becomes the first parameter to (m/Text <child 1>)
             "hello, world\\n")
           (fx/hero {:tag "imageHero"}                       ;; use the `fx/` alias for widgets not referred ^^
             (m/Image                                        ;; native Flutter Image widget is fine as the child of f/mx hero.
