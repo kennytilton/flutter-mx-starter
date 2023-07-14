@@ -1,5 +1,5 @@
 ### The Making of "Hello, world."
-This repo's README decribes the mechanics necessary to _run_ "Hello, world." In this section, we will break down how it all works, from ClojureDart configuration, thru library usage, Matrix dataflow, Flutter interop and testing on all platforms, including actual and simulated mobile.
+This repo's README decribes the mechanics necessary to _run_ "Hello, world." In this section, we will break down _how it all works_, from ClojureDart configuration, thru library usage, Matrix dataflow, Flutter interop and testing on all platforms, including actual and simulated mobile.
 
 The intended audience is both Dart devs who do not know Clojure, and Clojure devs unfamiliar with Flutter. So some materail will seem old hat to some.
 
@@ -11,17 +11,17 @@ cd unicorn
 ```
 ...and populated it with the same single file, `deps.edn`:
 ```
-{:paths ["src"] ; one or more directory trees where CLJD should look for source to compile
- :deps ;; library dependencies
-        {tensegritics/clojuredart 
+{:paths ["src"] ; where your cljd files are
+ :deps {tensegritics/clojuredart
         {:git/url "https://github.com/tensegritics/ClojureDart.git"
-         :sha "ae1b485e84ccc35b122f776dfc7cc62198274701"}
+         :sha "5ac0b6ccecd8a41e1a317e164dfc2dd9062d739a"}
+
         kennytilton/flutter-mx
         {:git/url "https://github.com/kennytilton/flutter-mx.git"
-         :sha "37f79ced88d27b015075b8c6a2b5c98c2c306e6a"}}
- :aliases {:cljd {:main-opts ["-m" "cljd.build"]}} 
+         :sha "0b4bd358acf60db6e40a83c9b35bd16ca78d4935"}}
+ :aliases {:cljd {:main-opts ["-m" "cljd.build"]}}
  :cljd/opts {:kind :flutter
-             :main counter-app.main}} ;; the app entry point
+             :main unicorn.main}}
 ```
 That file tells Clojure and ClojureDart (CLJD) utilities what the need to know to manage out project.
 
@@ -64,4 +64,4 @@ cd ios
 pod install
 cd ..
 ```
-
+### The source: 
