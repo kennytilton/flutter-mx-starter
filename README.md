@@ -73,8 +73,10 @@ Get the latest SHA from [the f/mx repo](https://github.com/kennytilton/flutter-m
  :cljd/opts {:kind :flutter
              :main unicorn.main}}
 ```
-### Next step
-Now let us build a second "app" from scratch, a [Flutter/MX implementation](https://github.com/kennytilton/flutter-mx-starter/blob/main/doc/counter-app.md) of the classic Flutter Counter app.
+### Next steps
+If we followed the steps above accurately, we managed to get a CLJD Flutter/MX demo app running, but we did not learn very much about how it all works. In our next doc, we look at the infrastructure behind the scenes: [The Making of "Hello, world."](https://github.com/kennytilton/flutter-mx-starter/blob/main/doc/hello-world.md).
+
+Then we build a second "app" from scratch, a [Flutter/MX implementation](https://github.com/kennytilton/flutter-mx-starter/blob/main/doc/counter-app.md) of the classic Flutter Counter app.
 
 ### Support
 Look for @kennytilton in the #matrix or #clojuredart channels on the #Clojurians Slack and I will help you get going.
