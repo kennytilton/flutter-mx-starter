@@ -213,8 +213,31 @@ Speaking of this issue, consider the `hero` widget, reiterated here:
       .height 512))
 ```
 Two things to note:
-* as advertised, the single implicit `kid` `m/Image` will become the `Hero` child; and
+* as advertised, the single implicit `kid` `m/Image` will become the `fx/hero` kid and `m/Hero` `.child`; and
 * yes, native widgets are fine as f/mx kids/children. (The inverse is a feature under consideration.)
+
+Now why no `fx/image` proxy constructor? Another issue that deserves its own section.
+
+#### Not all Flutter constructors have `f/mx` proxies
+For now, new `f/mx` proxy constructors must be hand-coded. For example, here is why we have an `fx/hero` proxy:
+```
+(deftag tilton.fmx.factory/k1-child-stateful hero m/Hero)
+```
+How did we come up with that, and how can an `f/mx` wrap native widgets not yet wrapped?
+
+First, we check the inheritance:
+```
+Inheritance
+Object DiagnosticableTree Widget StatefulWidget Hero
+```
+So "stateful". 
+
+Second, we see that a Hero `child` is what gets animated, a natural candidate for a `kid`, so `k1-child`. 
+
+The net result is a `deftag` that applies the `tilton.fmx.factory/k1-child-stateful` to produce a proxy `hero` for a native `m/Hero`.
+
+High on the Flutter/MX "do list" is auto-generating these mappings for the hundreds of Flutter classes and constructors.
+
 
 
 
