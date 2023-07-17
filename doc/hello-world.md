@@ -33,7 +33,7 @@ They leave out successfully referencing an external library, and linking where n
 Let's get started!
 
 #### In the beginning...
-In the beginning, we got a running start by cloning this repository into a new `unicorn` directory, and that repo already contained the key to creating a new `f/mx` project: `deps.edn`. If we were starting from scratch, we would have created an empty directory named for our app...
+In the beginning, we got an app running start by cloning this repository into a new `unicorn` directory, and that repo already contained the key to creating a new `f/mx` project: `deps.edn`. If we were starting from scratch, we would have created an empty directory named for our app...
 ```
 mkdir unicorn
 cd unicorn
@@ -117,5 +117,44 @@ Worth noting:
 * circularities are not allowed (so `tilton.fmx.api` cannot reference `acme.hello-world`);
 * aliases are used to refer to library entities, eg, `fx/hero` and `m/Image` we will see;
 * the `:refer` clause lets us use widgets like `scaffold` and `app-bar` without aliases.
+
+#### runApp? Where?
+Looking at our app, we see:
+```
+(defn make-app []
+  (material-app 
+    {:title "F/MX Hello World"
+     :theme (ThemeData.primarySwatch m.Colors/teal)}
+    ...))
+```
+Flutterers may wonder where are the `main` function and `runApp` we see in a native app:
+Looking at a native Flutter app, we see:
+```
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(... etc ...
+```
+In our `f/mx` demos, we have the above in one place and just point it at the current example:
+```
+(ns acme.main
+  (:require
+    ["package:flutter/widgets.dart" :as w]
+    [tilton.fmx.api :as fx]
+    [acme.hello-world :as hello]))
+
+(defn main []
+  (.ensureInitialized w/WidgetsFlutterBinding) ;; if an example needs it...
+  (fx/run-app
+    (fx/fx-render nil
+      (hello/make-app))))
+```
 
 
