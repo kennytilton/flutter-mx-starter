@@ -205,6 +205,18 @@ A native `MaterialApp` constructor expects a `.home` parameter. In f/x, we use t
 
 We think this makes Flutter code terser and easier to edit.
 
+Speaking of this issue, consider the `hero` widget, reiterated here:
+```
+(fx/hero {:tag "imageHero"}
+   (m/Image
+      .image (m/AssetImage "image/kernighan.jpeg")
+      .height 512))
+```
+Two things to note:
+* as advertised, the single implicit `kid` `m/Image` will become the `Hero` child; and
+* yes, native widgets are fine as f/mx kids/children. (The inverse is a feature under consideration.)
+
+
 
 
 
