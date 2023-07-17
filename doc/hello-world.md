@@ -156,5 +156,57 @@ In our `f/mx` demos, we have the above in one place and just point it at the cur
     (fx/fx-render nil
       (hello/make-app))))
 ```
+When we build the classic Counter app from scratch, we will just require also `[acme.counter-app :as counter]` and call its `make-app` in `main`. Now let's look at some more app code.
+
+#### The app
+Here is the bulk of the app:
+
+```
+(material-app
+  {:title "F/MX Hello World"
+   :theme (ThemeData
+            .primarySwatch m.Colors/teal)}
+  (scaffold
+    {:appBar (app-bar {:title (m/Text "Welcome to Flutter/MX")})}
+    (center
+      (column
+        {:mainAxisAlignment MainAxisAlignment/spaceEvenly}
+        (text {:style (p/TextStyle
+                         .color m.Colors/black
+                         .fontSize 32)}
+          "hello, world\\n")
+        (fx/hero {:tag "imageHero"} 
+          (m/Image
+            .image (m/AssetImage "image/kernighan.jpeg")
+            .height 512))
+        (text {:style (p/TextStyle
+                         .color m.Colors/black
+                         .fontSize 20)}
+          "Brian Kernighan")))))
+```
+Things to note about the `material-app`:
+* `material-app` is Lispy kebabob case, hyphen separated and all lower case;
+* parameters for the underlying `MaterialApp` call are collected in their own map as the first parameter;
+* the parameters `:title` and `:theme` are keywords, not `.title` and `.theme`. f/mx internals convert those;
+* `ThemeData` is native Flutter, albeit code in CLJD and following lispy syntax;
+* for native widgets, we use dot notation for parameters such as `.primarySwatch`; and
+* both f/mx material-app and native ThemeData can be referenced without aliases, because they are :refer'ed.
+
+And there is one more very important thing to note, so important it gets its own section.
+
+#### Implied :home, :body, :child, and even constructor positional parameters
+A native `MaterialApp` constructor expects a `.home` parameter. In f/x, we use two tricks to reduce code noise.
+* all parameters after the property map are considered f/mx `kids`, short for children;
+* in most cases, `f/mx` widgets have an implied role in mind for kids/children:
+  * material-app expects one kid, which gets passed as the `home` parameter;
+  * scaffold treats one expected kid as `body`;
+  * f/mx `(text "hello,world)` creates a `text` proxy for an `m/Text`. "hello, world" becomes a child of the proxy, but gets passed as a constructor argument: `(m/Text "Hello, world.")`; and
+  * other widgets convert `kids` to `child` or `children`.
+
+We think this makes Flutter code terser and easier to edit.
+
+
+
+
 
 
