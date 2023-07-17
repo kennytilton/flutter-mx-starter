@@ -185,7 +185,7 @@ Here is the bulk of the app:
           "Brian Kernighan")))))
 ```
 Things to note about the `material-app`:
-* `material-app` is Lispy kebabob case, hyphen separated and all lower case;
+* `material-app` is Lispy kebab-case, hyphen separated and all lower case;
 * parameters for the underlying `MaterialApp` call are collected in their own map as the first parameter;
 * the parameters `:title` and `:theme` are keywords, not `.title` and `.theme`. f/mx internals convert those;
 * `ThemeData` is native Flutter, albeit code in CLJD and following lispy syntax;
