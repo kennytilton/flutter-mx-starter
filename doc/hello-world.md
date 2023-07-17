@@ -1,7 +1,36 @@
 ### The Making of "Hello, world."
-This repo's README decribes the mechanics necessary to _run_ "Hello, world." In this section, we will break down _how it all works_, from ClojureDart configuration, thru library usage, Matrix dataflow, Flutter interop and testing on all platforms, including actual and simulated mobile.
+This repo's README decribes the mechanics necessary to _run_ "Hello, world." Hopefully that went well. In this section, we will break down _how it all works_, from ClojureDart configuration, thru library usage, Matrix dataflow, Flutter interop and testing on all platforms, including actual and simulated mobile.
 
 The intended audience is both Dart devs who do not know Clojure, and Clojure devs unfamiliar with Flutter. So some materail will seem old hat to some.
+
+#### "Hello, world." misunderstood
+Many misunderstand the point of the "Hello, world." exercise. They think the point is, as described in K&R:
+```
+_Print the words_
+    hello, world
+```
+So we see "solutions" like:
+```
+$ python3
+Python 3.11.3 (main, Apr  7 2023, 19:25:52) [Clang 14.0.0 (clang-1400.0.29.202)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> print("Hello, world")
+Hello, world
+```
+Looks satisfactory, right? Now let's see what the authors had in mind:
+> [Writing this program] is the big hurdle; to leap over it you have to create the program text somewhere, compile it successfully, load it, run it, and find out where your output went. With these mechanical details mastered, everything else is relatively easy.
+
+They leave out successfully referencing an external library, and linking where necessary. For the Python programmer, or ClojureDart, the equivalent sequence would be:
+* install Xcode;
+* install Dart/Flutter;
+* install Clojure;
+* install ClojureDart
+* pick an IDE and get that working with CLJD;
+* require the right Flutter packages;
+* compile/run; and
+* build for relase.
+
+Let's get started!
 
 #### In the beginning...
 In the beginning, we got a running start by cloning this repository into a new `unicorn` directory, and that repo already contained the key to creating a new `f/mx` project: `deps.edn`. If we were starting from scratch, we would have created an empty directory named for our app...
@@ -64,4 +93,29 @@ cd ios
 pod install
 cd ..
 ```
-### The source: 
+### The source
+And now at long last we get to look at some code. 
+
+#### The namespace
+We begin with the first form, a so-called "namespace" (hence `ns`) that defines the library coordinates, here `acme.world`, and the other libraries and packages needed by this source file.
+
+```clojure
+(ns acme.hello-world
+  (:require
+    [tilton.fmx.api :as fx
+     :refer [scaffold app-bar text center column material-app]]
+    ["package:flutter/widgets.dart" :as w]
+    ["package:flutter/material.dart" :as m
+     :refer [ThemeData MainAxisAlignment]]
+    ["package:flutter/painting.dart" :as p]))
+```
+First we see the `ns` name, `acme.hello-world`. By convention, this corresponds to a file with extension `.clj[|c|d]` located in the file system at `_srcPath_/acme` with filename `hello_world`. _srcPath_ must be one listed in the `:paths` option of `deps.edn`. The underscore is no typo, rather a nod to the Java underlying Clojure proper.
+
+We also see a CLJD dependency, `tilton.fmx.api`, and several flutter packages. CLJD provides the latter, but to get our own `fmx` library we need the dependency `kennytilton/flutter-mx`, again specified in `deps.edn`.
+
+Worth noting:
+* circularities are not allowed (so `tilton.fmx.api` cannot reference `acme.hello-world`);
+* aliases are used to refer to library entities, eg, `fx/hero` and `m/Image` we will see;
+* the `:refer` clause lets us use widgets like `scaffold` and `app-bar` without aliases.
+
+
