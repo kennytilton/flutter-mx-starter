@@ -6,7 +6,7 @@ The intended audience is both Dart devs who do not know Clojure, and Clojure dev
 #### "Hello, world." misunderstood
 Many misunderstand the point of the "Hello, world." exercise. They think the point is, as described in K&R:
 ```
-_Print the words_
+Print the words
     hello, world
 ```
 So we see "solutions" like:
@@ -18,9 +18,9 @@ Type "help", "copyright", "credits" or "license" for more information.
 Hello, world
 ```
 Looks satisfactory, right? Now let's see what the authors had in mind:
-> [Writing this program] is the big hurdle; to leap over it you have to create the program text somewhere, compile it successfully, load it, run it, and find out where your output went. With these mechanical details mastered, everything else is relatively easy.
+> [Writing this program] is the big hurdle; to leap over it you have to create the program text somewhere, compile it successfully, load it, run it, and find out where your output went. With these mechanical details mastered, everything else is relatively easy. "The C Programming Language", Kernighan & Ritchie, 1988.
 
-They leave out successfully referencing an external library, and linking where necessary. For the Python programmer, or ClojureDart, the equivalent sequence would be:
+They leave out successfully referencing an external library, and linking where necessary to produce an executable. For the Python programmer, or ClojureDart, the equivalent sequence would be:
 * install Xcode;
 * install Dart/Flutter;
 * install Clojure;
