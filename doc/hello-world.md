@@ -1,5 +1,5 @@
 ### The Making of "Hello, world."
-This repo's README decribes the mechanics necessary to _run_ "Hello, world." Hopefully that went well. In this section, we will break down _how it all works_, from ClojureDart configuration, thru library usage, Matrix dataflow, Flutter interop and testing on all platforms, including actual and simulated mobile.
+This repo's [README](https://github.com/kennytilton/flutter-mx-starter/tree/main#readme) decribes the mechanics necessary to _run_ "Hello, world." Hopefully that went well. In this section, we will break down _how it all works_, from ClojureDart configuration, thru library usage, Matrix dataflow, Flutter interop and testing on all platforms, including actual and simulated mobile.
 
 The intended audience is both Dart devs who do not know Clojure, and Clojure devs unfamiliar with Flutter. So some materail will seem old hat to some.
 
