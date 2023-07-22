@@ -53,6 +53,12 @@ git commit -am "clone from flutter-mx-starter"
 ```
 ### Maintenance
 As Clojure Dart and Flutter/MX move forward, you might want to move with them
+
+#### Flutter/Dart
+Easy:
+```bash
+flutter upgrade
+```
 #### ClojureDart
 Easy:
 ```bash
@@ -74,7 +80,7 @@ Get the latest SHA from [the f/mx repo](https://github.com/kennytilton/flutter-m
              :main unicorn.main}}
 ```
 ### Next steps
-If we followed the steps above accurately, we managed to get a CLJD Flutter/MX demo app running, but we did not learn very much about how it all works. In our next doc, we look at the infrastructure behind the scenes: [The Making of "Hello, world."](https://github.com/kennytilton/flutter-mx-starter/blob/main/doc/hello-world.md).
+If we followed the steps above accurately, we did manage to get a CLJD Flutter/MX demo app running, but we did not learn very much about how it all works. In our next doc, we look at the infrastructure behind the scenes: [The Making of "Hello, world."](https://github.com/kennytilton/flutter-mx-starter/blob/main/doc/hello-world.md).
 
 Then we build a second "app" from scratch, a [Flutter/MX implementation](https://github.com/kennytilton/flutter-mx-starter/blob/main/doc/counter-app.md) of the classic Flutter Counter app.
 
