@@ -1,6 +1,6 @@
 # Flutter/MX Starter
 
-A starter/instructional repo to help get you started on your own app using [ClojureDart](https://github.com/Tensegritics/ClojureDart) and [Flutter/Mx](https://github.com/kennytilton/flutter-mx).
+A starter/instructional repo to help get you started on your own app using [ClojureDart](https://github.com/Tensegritics/ClojureDart) and [Flutter/MX](https://github.com/kennytilton/flutter-mx).
 
 This repo out of the box will run this "Hello, world." app, a display-only exercise:
 
