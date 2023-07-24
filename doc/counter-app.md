@@ -99,7 +99,6 @@ Back in `counter-app.main`:
 ```
 Save again and you should see the app in your simulator change to a black screen:
 
-![Simulator with black screen](https://github.com/kennytilton/flutter-mx-starter/blob/main/image/mat-app-only.png)
 
 Success! Now let us add the the `.home` widget.
 
