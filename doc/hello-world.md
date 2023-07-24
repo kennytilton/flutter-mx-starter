@@ -190,9 +190,9 @@ Things to note about the `material-app`:
 * `material-app` is Lispy kebab-case, hyphen separated and all lower case;
 * parameters for the underlying `MaterialApp` call are collected in their own map as the first parameter;
 * the parameters `:title` and `:theme` are keywords, not `.title` and `.theme`. f/mx internals convert those;
-* `ThemeData` is native Flutter, albeit code in CLJD and following lispy syntax;
+* `ThemeData`, `m/Text`, `p/TextStyle`, and `m/AssetImage` are all native Flutter, although coded in CLJD and following lispy syntax;
 * for native widgets, we use dot notation for parameters such as `.primarySwatch`; and
-* both f/mx material-app and native ThemeData can be referenced without aliases, because they are :refer'ed.
+* f/mx widgets such as `material-app` and native constructors like ThemeData can be referenced without aliases, because they are :refer'ed.
 
 And there is one more very important thing to note, so important it gets its own section.
 
