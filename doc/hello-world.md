@@ -89,7 +89,7 @@ dart pub upgrade
 Left as an exercise is modifying our source to work with any breaking package changes.
 
 ##### ios/Podfile and Podfile.lock
-Every couple of months or so I encounter a build error that includes a suggestion to run `pod imstall`. It is not clear how that gets triggered, but as the error suggests, this has always wordked for me:
+Every couple of months or so I encounter a build error that includes a suggestion to run `pod imstall`. It is not clear how that gets triggered, but as the error suggests, this has always worked for me:
 ```
 cd ios
 pod install
