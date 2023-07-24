@@ -52,12 +52,14 @@ cd unicorn
  :cljd/opts {:kind :flutter
              :main unicorn.main}}
 ```
-That file tells Clojure and ClojureDart (CLJD) utilities what the need to know to manage out project.
+That file tells Clojure and ClojureDart (CLJD) utilities what they need to know to manage our project. Specifically, it tells CLJD enough to populate the rest of the directory with assets required to build and run our app. 
 
-Specifically, it tells CLJD enough to populate the rest of the directory with assets required to build and run our app. Still in the same root directory:
+Still in the same root directory:
 ```
 clj -M:cljd init
 ```
+Now let's look at what that created.
+
 #### Key assets
 The first interesting asset created by `init`, familiar to Clojure developers, is the `src` directory pointed to by the `:paths` property of `deps.edn`. The plural "paths" means business: the `f/mx` library itself has a second directory of source containing dozens of examples used during testing, but which we do not want burdening apps which include `f/mx`.
 
