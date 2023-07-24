@@ -5,7 +5,7 @@ Now that we have a "Hello, world." running, we are ready to build a small app fr
 * offers a button we can use to increment the counter; and
 * has a bit of nice layout and labelling.
 
-In the Flutter world, IDEs such as VSCode and IntelliJ generate this app automatically on demand. We will build ours in `f/mx` from scratch. But first, let us look at the Dart version we will replicate, greatly abbreviated to start:
+In the Flutter world, IDEs such as VSCode and IntelliJ generate this app automatically on demand. We will build ours in `f/mx` from scratch. But first, let us look at the Dart version we will replicate, greatly abbreviated:
 ```dart
 import 'package:flutter/material.dart';
 
@@ -54,7 +54,7 @@ Worth noting:
 * the `w/` prefix references the alias established by `["package:flutter/widgets.dart" :as w]`. Clojure source files handle such linkage individually;
 * the method invocation syntax is `(method class arguments*)` instead of `class.method( arguments*)`;
 * standard CLJD interop preserves the camelCase; but
-* `f/mx` wrappers `run-fx-app` uses Lisp kebab case by convention. CLJD exposes the Flutter API in the same camelCase used by Dart, but `f/mx` proxy constructors are named in kebab-case. This is to preserve our sanity, since `f/mx` components can be built with native Flutter elements.
+* `f/mx` wrappers `run-fx-app` uses Lisp kebab case by convention. CLJD exposes the Flutter API in the same camelCase used by Dart, but `f/mx` proxy constructors are named in kebab-case. This is to preserve our sanity, since `f/mx` components can be built with native Flutter elements as delegates or children.
   
 So now we just need to build a proxy for a `MaterialApp`.
 
@@ -64,4 +64,38 @@ We can use `hello_world.app` as our starting point. We will leave the original "
 1. Create a new file/namespace for our app. Use your chosen IDE to create a new file `counter.cljd` alongside `hello_world.cljd`.
 2. Replace any automatically generated content of `counter.cljd` with the contents of `hello_world.cljd`.
 3. Restore the `ns` name `counter-app.counter`.
-4. Delete the function `make-app`.
+4. Replace the function `make-app` with this equivalent of the original `MaterialApp` call:
+
+```
+(defn make-app []
+  (material-app
+    {:title "Flutter Demo"
+     :theme (m/ThemeData
+              .colorScheme (m/ColorScheme.fromSeed
+                             .seedColor m/Colors.deepPurple)
+              .useMaterial3 true)}))
+```
+Yes, that will not do much, but we just want enough to hook up to our `run-app`. 
+
+Save your changes and correct any errors. Once it compiles.
+
+Back in `counter-app.main`:
+* Add `[acme.counter-app :as counter]` to the list of `:require`s; and
+* change the `make-app` alias from `hello` to `counter`:
+
+```
+(ns acme.main
+  (:require
+    ["package:flutter/widgets.dart" :as w]
+    [tilton.fmx.api :as fx]
+    [acme.hello-world :as hello]
+    [acme.counter-app :as counter]))
+
+(defn main []
+  (.ensureInitialized w/WidgetsFlutterBinding)
+  (fx/run-app
+    (fx/fx-render nil
+      (counter/make-app))))
+```
+Save again and you should see the app in your simulator change to a black screen:
+
