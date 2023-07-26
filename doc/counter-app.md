@@ -105,9 +105,9 @@ Success! Now let us add the the `home` widget.
 
 #### Home alone
 
-`Flutter/MX`, by design, codes like native Flutter. Once the syntax hurdle is made, a strong Flutter developer can work with F/MX as they do now with Flutter. That said, F/MX _does_ deviate from Flutter in a few ways, ways we find enhances the coding experience. 
+`Flutter/MX`, by design, codes much like native Flutter. We want Flutter doc to be the doc for `f/mx`. This means that, once the syntax hurdle is overcome, a strong Flutter developer can work with `f/mx` as they do now with Flutter. That said, `f/mx` _does_ deviate from Flutter in a few ways, ways we find enhances the coding experience. 
 
-One example of this is that we adopt the uniformity of the HTML DOM, where it is all nodes and zero or more child nodes, a simple tree. In the case of `material-app`, we have it accept one child, and internally pass that to `MaterialApp` as `home:`.
+One example of this is that we adopt the uniformity of the HTML DOM, where it is all nodes and child nodes, a simple tree. When we see a property (1) on a commonly used widget and (2) that seems like it could be a child, we make that transformation. In the case of `material-app`, we have it accept one child, and internally pass that to `MaterialApp` as `home:`.
 ```clojure
 (defn make-app []
   ; --- a map of parameters for MaterialApp
@@ -130,3 +130,6 @@ One example of this is that we adopt the uniformity of the HTML DOM, where it is
 <img src="https://github.com/kennytilton/flutter-mx-starter/blob/main/image/mat-scaffold.png"
   width="20%" height="20%" style="border:4px solid #F00;">
 
+Note the `app-bar` above. Its two properties are worth noting. To specify the `:backgroundColor`, the spec says to work off the `context` Theme. To access the context, we see a macro `in-my-context` being used to wrap a form in a callback with parameters `me` and `ctx`, the context. When `f/mx` internals "build" the `app-bar`, they will see this callback and know to invoke it in order to determine the background color.
+
+A second interesting property is `:title`, with a value of `(mget me :title)`. For reasons we will explore in depth more and more, `me` is bound to the `material-app` widget. So where the native code accessed `widget.title`, where widget was the MaterialApp, we access `(mget me :title)`.
