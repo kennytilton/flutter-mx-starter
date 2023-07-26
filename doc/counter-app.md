@@ -51,7 +51,7 @@ Unwinding that:
 
 Worth noting:
 * `(.ensuredInitialzed w/WidgetsFlutterBinding)` is much like the native Dart `WidgetsFlutterBinding.ensureInitialized()`;
-* the `w/` prefix references the alias established by `["package:flutter/widgets.dart" :as w]`. Clojure source files handle such linkage individually;
+* the `w/` prefix references the alias established by `["package:flutter/widgets.dart" :as w]`. Clojure source files each must declare such linkage individually;
 * the method invocation syntax is `(method class arguments*)` instead of `class.method( arguments*)`;
 * standard CLJD interop preserves the camelCase; but
 * `f/mx` wrappers `run-fx-app` uses Lisp kebab case by convention. CLJD exposes the Flutter API in the same camelCase used by Dart, but `f/mx` proxy constructors are named in kebab-case. This is to preserve our sanity, since `f/mx` components can be built with native Flutter elements as delegates or children.
