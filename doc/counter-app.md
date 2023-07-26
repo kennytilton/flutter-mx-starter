@@ -128,8 +128,47 @@ One example of this is that we adopt the uniformity of the HTML DOM, where it is
 > Replace your `make-app` with the one above and save. You should see the following:
 
 <img src="https://github.com/kennytilton/flutter-mx-starter/blob/main/image/mat-scaffold.png"
-  width="20%" height="20%" style="border:4px solid #F00;">
+  width="20%" height="20%">
 
 Note the `app-bar` above. Its two properties are worth noting. To specify the `:backgroundColor`, the spec says to work off the `context` Theme. To access the context, we see a macro `in-my-context` being used to wrap a form in a callback with parameters `me` and `ctx`, the context. When `f/mx` internals "build" the `app-bar`, they will see this callback and know to invoke it in order to determine the background color.
 
 A second interesting property is `:title`, with a value of `(mget me :title)`. For reasons we will explore in depth more and more, `me` is bound to the `material-app` widget. So where the native code accessed `widget.title`, where widget was the MaterialApp, we access `(mget me :title)`.
+
+#### Scaffold body <= child
+
+Now let's give our Scaffold some content. Native Dart developers will know we do that by supplying a widegt for the Scaffold `:body` parameter, as we see in the native Dart:
+```dart
+Scaffold ....
+    body: Center(
+           child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                       const Text('You have pushed the button this many times:')))
+```
+Here again, `f/mx` expects instead a single `kid` widget, which it will pass to the native Scaffold as `body:`.
+
+> Replace the current `scaffold` form with the following, a partial implementation of the Counter App:
+
+```clojure
+(scaffold
+      {:appBar (app-bar
+                 {:backgroundColor (fx/in-my-context [me ctx]
+                                     (.-inversePrimary (.-colorScheme (.of m/Theme ctx))))
+                  :title (m/Text (mget me :title))})}
+      (center
+        (column {:mainAxisAlignment m/MainAxisAlignment.center}
+          (text {:style (p/TextStyle .color m/Colors.black
+                          .fontSize 14.0)}
+            "You have pushed the button this many times:"))))
+```
+Save and you should see:
+
+<img src="https://github.com/kennytilton/flutter-mx-starter/blob/main/image/scaffold-one-label.png"
+  width="20%" height="20%">
+
+Note another nod to the regularity of HTML syntax: the string content of the f/mx `text` widget appears as in the "child" position. This f/mx child gets passed as the first parameter to `m/Text` by f/mx internals:
+```clojure
+(m/Text "You have pushed the button this many times:"
+   .style (p/TextStyle .color m/Colors.black
+                          .fontSize 14.0)
+```
