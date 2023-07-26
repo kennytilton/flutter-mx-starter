@@ -127,4 +127,6 @@ One example of this is that we adopt the uniformity of the HTML DOM, where it is
 ```
 > Replace your `make-app` with the one above and save. You should see the following:
 
-![](https://github.com/kennytilton/flutter-mx-starter/blob/main/image/mat-app-scaffold.png)
+<img src="https://github.com/kennytilton/flutter-mx-starter/blob/main/image/mat-scaffold.png"
+  width="20%" height="20%" style="border:4px solid #F00;">
+
