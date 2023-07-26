@@ -51,7 +51,7 @@ Unwinding that:
 
 Worth noting:
 * `(.ensuredInitialzed w/WidgetsFlutterBinding)` is much like the native Dart `WidgetsFlutterBinding.ensureInitialized()`;
-* the `w/` prefix references the alias established by `["package:flutter/widgets.dart" :as w]`. Clojure source files handle such linkage individually;
+* the `w/` prefix references the alias established by `["package:flutter/widgets.dart" :as w]`. Clojure source files each must declare such linkage individually;
 * the method invocation syntax is `(method class arguments*)` instead of `class.method( arguments*)`;
 * standard CLJD interop preserves the camelCase; but
 * `f/mx` wrappers `run-fx-app` uses Lisp kebab case by convention. CLJD exposes the Flutter API in the same camelCase used by Dart, but `f/mx` proxy constructors are named in kebab-case. This is to preserve our sanity, since `f/mx` components can be built with native Flutter elements as delegates or children.
@@ -101,6 +101,30 @@ Save again and you should see the app in your simulator change to a black screen
 
 ![](https://github.com/kennytilton/flutter-mx-starter/blob/main/image/mat-app-only-small.png)
 
-Success! Now let us add the the `.home` widget.
+Success! Now let us add the the `home` widget.
 
-[RSN]
+#### Home alone
+
+`Flutter/MX`, by design, codes like native Flutter. Once the syntax hurdle is made, a strong Flutter developer can work with F/MX as they do now with Flutter. That said, F/MX _does_ deviate from Flutter in a few ways, ways we find enhances the coding experience. 
+
+One example of this is that we adopt the uniformity of the HTML DOM, where it is all nodes and zero or more child nodes, a simple tree. In the case of `material-app`, we have it accept one child, and internally pass that to `MaterialApp` as `home:`.
+```clojure
+(defn make-app []
+  ; --- a map of parameters for MaterialApp
+  (material-app
+    {:title "Flutter Demo"
+     :theme (m/ThemeData
+              .colorScheme (m/ColorScheme.fromSeed
+                             .seedColor m/Colors.deepPurple)
+              .useMaterial3 true)}
+    ; --- any remaining forms become zero or more Matrix `kids`:
+    ; --- This scaffold widget will be provided as the MaterialApp home: property.
+    (scaffold
+      {:appBar (app-bar
+                 {:backgroundColor (fx/in-my-context [me ctx]
+                                     (.-inversePrimary (.-colorScheme (.of m/Theme ctx))))
+                  :title (m/Text (mget me :title))})})))
+```
+> Replace your `make-app` with the one above and save. You should see the following:
+
+![](https://github.com/kennytilton/flutter-mx-starter/blob/main/image/mat-app-scaffold.png)
