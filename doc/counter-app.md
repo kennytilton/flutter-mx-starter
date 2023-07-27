@@ -16,13 +16,13 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -67,15 +67,14 @@ We can use `hello_world.app` as our starting point. We will leave the original "
 4. Replace the function `make-app` with this equivalent of the original `MaterialApp` call:
 
 ```
-(defn make-app []
-  (material-app
-    {:title "Flutter Demo"
+(material-app
+    {:title "Flutter/MX Demo"
      :theme (m/ThemeData
+              .useMaterial3 true
               .colorScheme (m/ColorScheme.fromSeed
-                             .seedColor m/Colors.deepPurple)
-              .useMaterial3 true)}))
+                             .seedColor m/Colors.deepPurple))}
 ```
-Yes, that will not do much, but we just want enough to hook up to our `run-app`. 
+No, that will not display much, but we just want enough to hook up to our `run-app`. 
 
 Save your changes and correct any errors. Once it compiles.
 
@@ -99,31 +98,30 @@ Back in `counter-app.main`:
 ```
 Save again and you should see the app in your simulator change to a black screen:
 
-![](https://github.com/kennytilton/flutter-mx-starter/blob/main/image/mat-app-only-small.png)
+<img src="https://github.com/kennytilton/flutter-mx-starter/blob/main/image/mat-app-only.png"
+  width="20%" height="20%">
 
-Success! Now let us add the the `home` widget.
+Success! Now let us add the `home` widget.
 
 #### Home alone
 
-`Flutter/MX`, by design, codes much like native Flutter. We want Flutter doc to be the doc for `f/mx`. This means that, once the syntax hurdle is overcome, a strong Flutter developer can work with `f/mx` as they do now with Flutter. That said, `f/mx` _does_ deviate from Flutter in a few ways, ways we find enhances the coding experience. 
+`Flutter/MX`, by design, codes much like native Flutter. We want Flutter doc to be the doc for `f/mx`. This means that, once the syntax hurdle is overcome, a strong Flutter developer can work with `f/mx` as they do now with Flutter. That said, `f/mx` _does_ deviate from Flutter in a few ways intended to enhance the coding experience. 
 
 One example of this is that we adopt the uniformity of the HTML DOM, where it is all nodes and child nodes, a simple tree. When we see a property (1) on a commonly used widget and (2) that seems like it could be a child, we make that transformation. In the case of `material-app`, we have it accept one child, and internally pass that to `MaterialApp` as `home:`.
 ```clojure
 (defn make-app []
-  ; --- a map of parameters for MaterialApp
   (material-app
-    {:title "Flutter Demo"
+    {:title "Flutter/MX Demo"
      :theme (m/ThemeData
+              .useMaterial3 true
               .colorScheme (m/ColorScheme.fromSeed
-                             .seedColor m/Colors.deepPurple)
-              .useMaterial3 true)}
-    ; --- any remaining forms become zero or more Matrix `kids`:
-    ; --- This scaffold widget will be provided as the MaterialApp home: property.
+                             .seedColor m/Colors.deepPurple))}
     (scaffold
       {:appBar (app-bar
                  {:backgroundColor (fx/in-my-context [me ctx]
-                                     (.-inversePrimary (.-colorScheme (.of m/Theme ctx))))
-                  :title (m/Text (mget me :title))})})))
+                                     (.-inversePrimary (.-colorScheme (m/Theme.of ctx))))
+                  :title           (m/Text (mget me :title))})})))
+  
 ```
 > Replace your `make-app` with the one above and save. You should see the following:
 
@@ -132,11 +130,10 @@ One example of this is that we adopt the uniformity of the HTML DOM, where it is
 
 Note the `app-bar` above. Its two properties are worth noting. To specify the `:backgroundColor`, the spec says to work off the `context` Theme. To access the context, we see a macro `in-my-context` being used to wrap a form in a callback with parameters `me` and `ctx`, the context. When `f/mx` internals "build" the `app-bar`, they will see this callback and know to invoke it in order to determine the background color.
 
-A second interesting property is `:title`, with a value of `(mget me :title)`. For reasons we will explore in depth more and more, `me` is bound to the `material-app` widget. So where the native code accessed `widget.title`, where widget was the MaterialApp, we access `(mget me :title)`.
+A second interesting property is `:title`, with a value of `(mget me :title)`. For reasons we will explore in depth more and more, `me` is bound to the `material-app` widget. So just as the native code accessed `widget.title`, where widget was the MaterialApp, we access `(mget me :title)`.
 
 #### Scaffold body <= child
-
-Now let's give our Scaffold some content. Native Dart developers will know we do that by supplying a widegt for the Scaffold `:body` parameter, as we see in the native Dart:
+Now let's give our Scaffold some content. Native Dart developers will know we do that by supplying a widget for the Scaffold `:body` parameter, as we see in the native Dart:
 ```dart
 Scaffold ....
     body: Center(
@@ -145,34 +142,33 @@ Scaffold ....
                     children: <Widget>[
                        const Text('You have pushed the button this many times:')))
 ```
-Here again, `f/mx` expects instead a single `kid` widget, which it will pass to the native Scaffold as `body:`.
+As with `MaterialApp`, the `f/mx` `scaffold` expects a single `kid` widget, which it will pass to the native Scaffold as `body:`.
 
 > Replace the current `scaffold` form with the following, a partial implementation of the Counter App:
 
 ```clojure
 (scaffold
-      {:appBar (app-bar
-                 {:backgroundColor (fx/in-my-context [me ctx]
-                                     (.-inversePrimary (.-colorScheme (.of m/Theme ctx))))
-                  :title (m/Text (mget me :title))})}
-      (center
-        (column {:mainAxisAlignment m/MainAxisAlignment.center}
-          (text {:style (p/TextStyle .color m/Colors.black
-                          .fontSize 14.0)}
-            "You have pushed the button this many times:"))))
+  {:appBar (app-bar
+             {:backgroundColor (fx/in-my-context [me ctx]
+                                 (.-inversePrimary (.-colorScheme (m/Theme.of ctx))))
+              :title           (m/Text (mget me :title))})}
+   (center
+    (column {:mainAxisAlignment m/MainAxisAlignment.center}
+      (text {:style (p/TextStyle .color m/Colors.black
+                      .fontSize 18.0)}
+        "You have pushed the button this many times:"))))
 ```
 Save and you should see:
 
 <img src="https://github.com/kennytilton/flutter-mx-starter/blob/main/image/scaffold-one-label.png"
   width="20%" height="20%">
 
-Note another nod to the regularity of HTML syntax: the string content of the f/mx `text` widget appears in the "child" position! This is like `<b>Hi, Mom!</b>` expanding to a bold node with a child textContent. Here, our f/mx string "child" gets passed as the first parameter to `m/Text` by f/mx internals:
+Note another nod to the regularity of HTML syntax: the string content of the f/mx `text` widget appears in the "child" position! This is like `<b>Hi, Mom!</b>` expanding to a bold node with a child `textContent`. Here, our f/mx string "child" gets passed as the first parameter to `m/Text` by f/mx internals, expanding like this:
 ```clojure
 (m/Text "You have pushed the button this many times:"
-   .style (p/TextStyle .color m/Colors.black
-                          .fontSize 14.0)
+   .style (p/TextStyle .color m/Colors.black .fontSize 14.0)
 ```
-Now let's add the counter, and a button to increment it. So we will see Matrix reactivity for the first time!
+Now let's add the counter, and a button to increment it. We will see Matrix reactivity for the first time!
 
 #### A counter and a (+) button
 
@@ -187,23 +183,23 @@ All that can be found in the new version of `make-app`, below. Check the comment
   (material-app
     {:title "Flutter/MX Demo"
      :theme (m/ThemeData
+              .useMaterial3 true
               .colorScheme (m/ColorScheme.fromSeed
                              .seedColor m/Colors.deepPurple))}
     (scaffold
-      {:appBar
-       (app-bar
-         {:title (m/Text (mget me :title))})
+      {:appBar (app-bar
+                 {:backgroundColor (fx/in-my-context [me ctx]
+                                     (.-inversePrimary (.-colorScheme (m/Theme.of ctx))))
+                  :title           (m/Text (mget me :title))})
        :floatingActionButton
-       (cF (fx/floating-action-button
-             {:onPressed (as-dart-callback []
-                           ; 'fm*' searches everywhere, inside-out, looking for :my-counter
-                           (mswap! (fm* :my-counter) :counter inc))
-              :tooltip   "Increment"}
-             (m/Icon m/Icons.add)))}
-      { ;--- custom state goes in an optional, second map literal -------
-       :name :my-counter ;; will we look this widget up by name
-       :counter (cI 0) ;; cI means "cell (for) Input"
-       }
+               (cF (fx/floating-action-button
+                     {:onPressed (as-dart-callback []
+                                   (mswap! (fm* :my-counter) :count inc))
+                      :tooltip   "Increment"}
+                     (m/Icon m/Icons.add)))}
+      {;--- custom state goes in an optional, second map literal -------
+         :name  :my-counter                                 ;; will we look this widget up by name
+         :count (cI 0)}                                     ;; cI means "cell (for) Input"
       (center
         (column {:mainAxisAlignment m/MainAxisAlignment.center}
           (text {:style (p/TextStyle .color m/Colors.black
@@ -213,8 +209,8 @@ All that can be found in the new version of `make-app`, below. Check the comment
             {:style (fx/in-my-context [me ctx]
                       (.-headlineMedium (.-textTheme (m/Theme.of ctx))))}
             ; all kids get silently wrapped in a formulaic cell
-            ; this formula uses 'fasc' to search its 'ascendants" for the first named :my-counter
-            (str (mget (fasc :my-counter) :counter))))))))
+            ; this formula uses 'fasc' to search 'f'amily 'asc'endants for the first named :my-counter
+            (str (mget (fasc :my-counter) :count))))))))
 ```
 Save and click the (+) button a few times, and you should see the following:
 
@@ -222,8 +218,8 @@ Save and click the (+) button a few times, and you should see the following:
   width="20%" height="20%">
 
 Things to note:
-* `f/mx` widgets follow the OO prototype model, meaning we can add ad hoc state as needed for our apps;
+* `f/mx` widgets follow the OO prototype model, meaning we can add ad hoc state as needed for our apps. Here we attach the `:count` property to the `scaffold`, and give the scaffold a `:name` so other widgets can reference it;
 * search utilities such as `fm*` and `fasc` will need more documentation, under "Navigation";
-* we had to wrap the counter value in a `cI` "input cell" before we could mutate it; and
+* we wrapped the counter value in a `cI` "input cell" so we could mutate it; and
 * an automatic `cFkids` wrapper is provided for all forms following the parameter map(s).
 
