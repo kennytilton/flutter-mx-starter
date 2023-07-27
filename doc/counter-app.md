@@ -166,9 +166,64 @@ Save and you should see:
 <img src="https://github.com/kennytilton/flutter-mx-starter/blob/main/image/scaffold-one-label.png"
   width="20%" height="20%">
 
-Note another nod to the regularity of HTML syntax: the string content of the f/mx `text` widget appears as in the "child" position. This f/mx child gets passed as the first parameter to `m/Text` by f/mx internals:
+Note another nod to the regularity of HTML syntax: the string content of the f/mx `text` widget appears in the "child" position! This is like `<b>Hi, Mom!</b>` expanding to a bold node with a child textContent. Here, our f/mx string "child" gets passed as the first parameter to `m/Text` by f/mx internals:
 ```clojure
 (m/Text "You have pushed the button this many times:"
    .style (p/TextStyle .color m/Colors.black
                           .fontSize 14.0)
 ```
+Now let's add the counter, and a button to increment it. So we will see Matrix reactivity for the first time!
+
+#### A counter and a (+) button
+
+Now we can add the rest of the Counter App interface:
+* local state to hold the count;
+* a field to display the count; and
+* a `FloatingActionButton` rigged to increment the counter.
+
+All that can be found in the new version of `make-app`, below. Check the comments to see how we extended our app with state, display, and control:
+```
+(defn make-app []
+  (material-app
+    {:title "Flutter/MX Demo"
+     :theme (m/ThemeData
+              .colorScheme (m/ColorScheme.fromSeed
+                             .seedColor m/Colors.deepPurple))}
+    (scaffold
+      {:appBar
+       (app-bar
+         {:title (m/Text (mget me :title))})
+       :floatingActionButton
+       (cF (fx/floating-action-button
+             {:onPressed (as-dart-callback []
+                           ; 'fm*' searches everywhere, inside-out, looking for :my-counter
+                           (mswap! (fm* :my-counter) :counter inc))
+              :tooltip   "Increment"}
+             (m/Icon m/Icons.add)))}
+      { ;--- custom state goes in an optional, second map literal -------
+       :name :my-counter ;; will we look this widget up by name
+       :counter (cI 0) ;; cI means "cell (for) Input"
+       }
+      (center
+        (column {:mainAxisAlignment m/MainAxisAlignment.center}
+          (text {:style (p/TextStyle .color m/Colors.black
+                          .fontSize 18.0)}
+            "You have pushed the button this many times:")
+          (text
+            {:style (fx/in-my-context [me ctx]
+                      (.-headlineMedium (.-textTheme (m/Theme.of ctx))))}
+            ; all kids get silently wrapped in a formulaic cell
+            ; this formula uses 'fasc' to search its 'ascendants" for the first named :my-counter
+            (str (mget (fasc :my-counter) :counter))))))))
+```
+Save and click the (+) button a few times, and you should see the following:
+
+<img src="https://github.com/kennytilton/flutter-mx-starter/blob/main/image/final-version.png"
+  width="20%" height="20%">
+
+Things to note:
+* `f/mx` widgets follow the OO prototype model, meaning we can add ad hoc state as needed for our apps;
+* search utilities such as `fm*` and `fasc` will need more documentation, under "Navigation";
+* we had to wrap the counter value in a `cI` "input cell" before we could mutate it; and
+* an automatic `cFkids` wrapper is provided for all forms following the parameter map(s).
+
