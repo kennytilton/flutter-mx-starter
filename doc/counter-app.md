@@ -10,6 +10,7 @@ In the Flutter world, IDEs such as VSCode and IntelliJ generate this app automat
 import 'package:flutter/material.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -50,7 +51,7 @@ Unwinding that:
   * wrapping that native app in an anonymous stateless container, the role played by `MyApp` above.
 
 Worth noting:
-* `(.ensuredInitialzed w/WidgetsFlutterBinding)` is much like the native Dart `WidgetsFlutterBinding.ensureInitialized()`;
+* `(.ensuredInitialzed w/WidgetsFlutterBinding)` becomes `WidgetsFlutterBinding.ensureInitialized()`;
 * the `w/` prefix references the alias established by `["package:flutter/widgets.dart" :as w]`. Clojure source files each must declare such linkage individually;
 * the method invocation syntax is `(method class arguments*)` instead of `class.method( arguments*)`;
 * standard CLJD interop preserves the camelCase; but
@@ -66,7 +67,7 @@ We can use `hello_world.app` as our starting point. We will leave the original "
 3. Restore the `ns` name `counter-app.counter`.
 4. Replace the function `make-app` with this equivalent of the original `MaterialApp` call:
 
-```
+```clojure
 (material-app
     {:title "Flutter/MX Demo"
      :theme (m/ThemeData
@@ -79,22 +80,21 @@ No, that will not display much, but we just want enough to hook up to our `run-a
 Save your changes and correct any errors. Once it compiles.
 
 Back in `counter-app.main`:
-* Add `[acme.counter-app :as counter]` to the list of `:require`s; and
-* change the `make-app` alias from `hello` to `counter`:
-
-```
+1. Add `[acme.counter-app :as counter]` to the list of `:require`s; and
+2. change the `make-app` alias from `hello` to `counter`:
+```clojure
 (ns acme.main
   (:require
     ["package:flutter/widgets.dart" :as w]
     [tilton.fmx.api :as fx]
     [acme.hello-world :as hello]
-    [acme.counter-app :as counter]))
+    [acme.counter-app :as counter])) ;; <====== [1]
 
 (defn main []
   (.ensureInitialized w/WidgetsFlutterBinding)
   (fx/run-app
     (fx/fx-render nil
-      (counter/make-app))))
+      (counter/make-app))))  ;; <====== [2]
 ```
 Save again and you should see the app in your simulator change to a black screen:
 
@@ -105,7 +105,7 @@ Success! Now let us add the `home` widget.
 
 #### Home alone
 
-`Flutter/MX`, by design, codes much like native Flutter. We want Flutter doc to be the doc for `f/mx`. This means that, once the syntax hurdle is overcome, a strong Flutter developer can work with `f/mx` as they do now with Flutter. That said, `f/mx` _does_ deviate from Flutter in a few ways intended to enhance the coding experience. 
+`Flutter/MX`, by design, codes much like native Flutter. We want Flutter doc to be the doc for `f/mx`. This way, once the syntax hurdle is overcome, a strong Flutter developer can work with `f/mx` as they do now with Flutter. That said, `f/mx` _does_ deviate from Flutter in a few sugary ways intended to enhance the coding experience. 
 
 One example of this is that we adopt the uniformity of the HTML DOM, where it is all nodes and child nodes, a simple tree. When we see a property (1) on a commonly used widget and (2) that seems like it could be a child, we make that transformation. In the case of `material-app`, we have it accept one child, and internally pass that to `MaterialApp` as `home:`.
 ```clojure
@@ -116,6 +116,8 @@ One example of this is that we adopt the uniformity of the HTML DOM, where it is
               .useMaterial3 true
               .colorScheme (m/ColorScheme.fromSeed
                              .seedColor m/Colors.deepPurple))}
+    ;; all forms after param map(s) become 'kids' of material-app
+    ;; material-app expects at most one child, and takes that as 'home'
     (scaffold
       {:appBar (app-bar
                  {:backgroundColor (fx/in-my-context [me ctx]
@@ -178,7 +180,7 @@ Now we can add the rest of the Counter App interface:
 * a `FloatingActionButton` rigged to increment the counter.
 
 All that can be found in the new version of `make-app`, below. Check the comments to see how we extended our app with state, display, and control:
-```
+```clojure
 (defn make-app []
   (material-app
     {:title "Flutter/MX Demo"
