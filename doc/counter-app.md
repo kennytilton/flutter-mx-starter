@@ -3,7 +3,7 @@
 Now that we have a "Hello, world." running, we are ready to build a small app from scratch. The classic Flutter starter app is a simple "counter" app, which:
 * displays a counter starting at zero;
 * offers a button we can use to increment the counter; and
-* has a bit of nice layout and labelling.
+* has a bit of layout and labelling.
 
 In the Flutter world, IDEs such as VSCode and IntelliJ generate this app automatically on demand. We will build ours in `f/mx` from scratch. But first, let us look at the Dart version we will replicate, greatly abbreviated:
 ```dart
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 #### Replicating `runApp` in `f/mx`
-If we look at the project `main` function, we see that things are set up already to run any given app:
+If we look at our project `main` function, we see that things are set up already to run any given app, just by changing the namespace from which we grab `make-app`.
 ```clojure
 (ns counter-app.main
   (:require
@@ -44,7 +44,8 @@ If we look at the project `main` function, we see that things are set up already
   (fx/run-fx-app                               ;; a 'runAPP` that can run f/mx proxy apps
     (hello/make-app)))                         ;; any function that returns an f/mx proxy app
 ```
-Unwinding that:
+Right now, we just have the `hello-world` namespace. Our mission is to create a counter namespace, then come back here to hook into it. 
+Unwinding what we have now:
 * `hello/make-app` builds a Flutter/MX proxy for a Flutter "Hello, world" app;
 * `fx/run-fx-app` invokes `m/runApp`, after:
   * converting our f/mx app to a native Dart/Flutter app; and
@@ -130,9 +131,9 @@ One example of this is that we adopt the uniformity of the HTML DOM, where it is
 <img src="https://github.com/kennytilton/flutter-mx-starter/blob/main/image/mat-scaffold.png"
   width="20%" height="20%">
 
-Note the `app-bar` above. Its two properties are worth noting. To specify the `:backgroundColor`, the spec says to work off the `context` Theme. To access the context, we see a macro `in-my-context` being used to wrap a form in a callback with parameters `me` and `ctx`, the context. When `f/mx` internals "build" the `app-bar`, they will see this callback and know to invoke it in order to determine the background color.
+Consider the `app-bar` above. Its two properties are worth noting. To specify the `:backgroundColor`, the spec says to work off the `context` Theme. To access the context, we see a macro `in-my-context` being used to wrap a form in a callback with parameters `me` and `ctx`, the context. When `f/mx` internals "build" the `app-bar`, they will see this callback and know to invoke it in order to determine the background color. (We happen not to need `me` to decide the background color, but if we did it would be bound to the `app-bar`, a proxy for the AppBar to be generated.)
 
-A second interesting property is `:title`, with a value of `(mget me :title)`. For reasons we will explore in depth more and more, `me` is bound to the `material-app` widget. So just as the native code accessed `widget.title`, where widget was the MaterialApp, we access `(mget me :title)`.
+A second interesting property is `:title`, with a value of `(mget me :title)`. For reasons we will explore later, `me` is bound to the `material-app` widget. So just as the native code accessed `widget.title`, where widget was the MaterialApp, we access `(mget me :title)`.
 
 #### Scaffold body <= child
 Now let's give our Scaffold some content. Native Dart developers will know we do that by supplying a widget for the Scaffold `:body` parameter, as we see in the native Dart:
@@ -160,6 +161,8 @@ As with `MaterialApp`, the `f/mx` `scaffold` expects a single `kid` widget, whic
                       .fontSize 18.0)}
         "You have pushed the button this many times:"))))
 ```
+Note how `f/mx` widget macros eliminate all the `:body`, `:child`, `:children` noise.
+
 Save and you should see:
 
 <img src="https://github.com/kennytilton/flutter-mx-starter/blob/main/image/scaffold-one-label.png"
@@ -196,12 +199,12 @@ All that can be found in the new version of `make-app`, below. Check the comment
        :floatingActionButton
                (cF (fx/floating-action-button
                      {:onPressed (as-dart-callback []
-                                   (mswap! (fm* :my-counter) :count inc))
+                                   (mswap! (fm* :my-counter) :count inc)) ;; <============ simply change the :count property
                       :tooltip   "Increment"}
                      (m/Icon m/Icons.add)))}
       {;--- custom state goes in an optional, second map literal -------
-         :name  :my-counter                                 ;; will we look this widget up by name
-         :count (cI 0)}                                     ;; cI means "cell (for) Input"
+         :name  :my-counter                                 ;; <======== will we look this widget up by name
+         :count (cI 0)}                                     ;; <======== the count itself. cI means "cell (for) Input"
       (center
         (column {:mainAxisAlignment m/MainAxisAlignment.center}
           (text {:style (p/TextStyle .color m/Colors.black
@@ -212,7 +215,7 @@ All that can be found in the new version of `make-app`, below. Check the comment
                       (.-headlineMedium (.-textTheme (m/Theme.of ctx))))}
             ; all kids get silently wrapped in a formulaic cell
             ; this formula uses 'fasc' to search 'f'amily 'asc'endants for the first named :my-counter
-            (str (mget (fasc :my-counter) :count))))))))
+            (str (mget (fasc :my-counter) :count)))))))) ;; pull the display value from the widget named :counter
 ```
 Save and click the (+) button a few times, and you should see the following:
 
@@ -224,4 +227,11 @@ Things to note:
 * search utilities such as `fm*` and `fasc` will need more documentation, under "Navigation";
 * we wrapped the counter value in a `cI` "input cell" so we could mutate it; and
 * an automatic `cFkids` wrapper is provided for all forms following the parameter map(s).
+
+### Summary
+We have seen the essence of any Flutter/MX app:
+* we still program Flutter, just thinly wrapped by ClojureDart;
+* `f/mx` adds proxy widgets that are cleaner to code, but expand directly to Dart widgets;
+* custom state can be added to any widget as needed by the app. No external "store" as in Redux;
+* dataflow is arranged transparently. We just mutate designated "inputs" and read those inputs from formulas written in arbitrarily complex ClojureDart.
 
