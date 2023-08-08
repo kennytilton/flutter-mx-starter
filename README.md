@@ -16,7 +16,7 @@ With that under your belt, you should be able to get rolling on your own Unicorn
 
 ### Prerequisites
 
-Steps #1 and #2 in this [CLJD Quick Start](https://github.com/Tensegritics/ClojureDart/blob/main/doc/flutter-quick-start.md) to get you rocking on ClojureDart and Flutter development in general.
+First, work thru steps #1 and #2 in this [CLJD Quick Start](https://github.com/Tensegritics/ClojureDart/blob/main/doc/flutter-quick-start.md) to get you rocking on ClojureDart and Flutter development in general. You can skip this if you are already coding with CLJD and Flutter.
 
 ### Clone
 
