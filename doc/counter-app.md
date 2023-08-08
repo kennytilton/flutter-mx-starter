@@ -203,8 +203,8 @@ All that can be found in the new version of `make-app`, below. Check the comment
                       :tooltip   "Increment"}
                      (m/Icon m/Icons.add)))}
       {;--- custom state goes in an optional, second map literal -------
-         :name  :my-counter                                 ;; <======== will we look this widget up by name
-         :count (cI 0)}                                     ;; <======== the count itself. cI means "cell (for) Input"
+         :name  :my-counter                                 ;; <====== we will search for this widget by name, to display or update
+         :count (cI 0)}                                     ;; <====== the count itself. cI means "cell (for) Input"
       (center
         (column {:mainAxisAlignment m/MainAxisAlignment.center}
           (text {:style (p/TextStyle .color m/Colors.black
