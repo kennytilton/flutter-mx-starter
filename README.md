@@ -16,7 +16,7 @@ With that under your belt, you should be able to get rolling on your own Unicorn
 
 ### Prerequisites
 
-Steps #1 and #2 in this [CLJD Quick Start](https://github.com/Tensegritics/ClojureDart/blob/main/doc/flutter-quick-start.md) to get you rocking on ClojureDart and Flutter development in general.
+First, work thru steps #1 and #2 in this [CLJD Quick Start](https://github.com/Tensegritics/ClojureDart/blob/main/doc/flutter-quick-start.md) to get you rocking on ClojureDart and Flutter development in general. You can skip this if you are already coding with CLJD and Flutter.
 
 ### Clone
 
@@ -38,12 +38,14 @@ When that ^^^ is done, initialize the project, BUT ignore the final instructions
 ```bash
 clj -M:cljd init
 ```
-...and  test:
+...and  test. To use an iOS sim:
 ```bash
 open -a Simulator
 clj -M:cljd flutter
 ```
 You should now see Mr. Kernighan and the app on your sim.
+
+To test other ways, check out [this section of the f/mx README](https://github.com/kennytilton/flutter-mx/blob/main/README.md#2-you-now-have-three-delightful-options).
 
 Now to get `git` back into the picture:
 ```bash
@@ -74,7 +76,7 @@ Get the latest SHA from [the f/mx repo](https://github.com/kennytilton/flutter-m
 
         kennytilton/flutter-mx
         {:git/url "https://github.com/kennytilton/flutter-mx.git"
-         :sha "37f23d85d18310e2e0391a9b0ebf1d52f72d4aa0"}} <================= COPY NEW F/MX SHA HERE
+         :sha "a7250e50a7016499ca1effb63b8d0606f373c247"}} <================= COPY NEW F/MX SHA HERE
  :aliases {:cljd {:main-opts ["-m" "cljd.build"]}}
  :cljd/opts {:kind :flutter
              :main unicorn.main}}
