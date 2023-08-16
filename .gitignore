@@ -14,7 +14,6 @@ linux
 macos
 android
 ios
-lib
 web
 windows
 analysis_options.yaml
@@ -52,18 +51,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-
-# ClojureDart
-.cpcache/
-.clojuredart/
-lib/cljd-out/
-test/cljd-out/
-
-# ClojureDart
-.cpcache/
-.clojuredart/
-lib/cljd-out/
-test/cljd-out/
 
 # ClojureDart
 .cpcache/
