@@ -50,7 +50,7 @@ To test other ways, check out [this section of the f/mx README](https://github.c
 Now to get `git` back into the picture:
 ```bash
 git init
-git add README.md clean.sh deps.edn lib/main.dart pubspec.* src test
+git add .gitignore .gitattributes README.md clean.sh deps.edn lib/main.dart pubspec.* src test image
 git commit -am "clone from flutter-mx-starter"
 ```
 ### Maintenance
