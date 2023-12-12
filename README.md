@@ -34,7 +34,7 @@ Now edit the source globally replacing "acme" with "unicorn":
 ```bash
 find . -type f -exec sh -c 'file -b "$1" | grep -q ASCII' sh {} \; -exec sed -i '' 's/acme/unicorn/g' {} +
 ```
-When that ^^^ is done, initialize the project, BUT ignore the final instructions on how "to run your application":
+When that ^^^ is done, initialize the project, BUT ignore the final instructions on how "to run your application". WARNING: this step can pause for a minute after displaying "Got dependencies.":
 ```bash
 clj -M:cljd init
 ```
