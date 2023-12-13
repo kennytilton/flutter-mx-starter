@@ -6,7 +6,6 @@
 
 (defn main []
   (.ensureInitialized w/WidgetsFlutterBinding)
-  (fx/run-app
-    (fx/fx-render nil
-      (hello/make-app))))
+  (fx/run-fx-app
+    (hello/make-app)))
 
