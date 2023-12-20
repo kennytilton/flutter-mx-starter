@@ -26,7 +26,9 @@ git clone https://github.com/kennytilton/flutter-mx-starter.git unicorn
 cd unicorn
 rm -rf .git
 ```
-Start the internal name change, from "acme":
+We will do a fresh `git init` after a few more steps.
+
+Now we start the internal name change, from "acme":
 ```bash
 mv src/acme src/unicorn
 ```
