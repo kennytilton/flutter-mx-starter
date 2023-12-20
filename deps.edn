@@ -3,9 +3,8 @@
              {:git/url "https://github.com/tensegritics/ClojureDart.git"
               :sha     "05f2ff1f2ad7a8799a28dfb1a7bf5b7e98eab37d" #_"b7c1c4e9f25733c0480a6e5d56005384522964e2" #_"5ac0b6ccecd8a41e1a317e164dfc2dd9062d739a"}
              kennytilton/flutter-mx
-             #_ {:local/root "../flutter-mx"}
              {:git/url "https://github.com/kennytilton/flutter-mx.git"
-              :sha     "7f767da013521336383ba5c17ddff50f9789698b"}}
+              :sha     "841b6dab1596169b39a693bdff7f561bbb886b41"}}
  :aliases   {:cljd {:main-opts ["-m" "cljd.build"]}}
  :cljd/opts {:kind :flutter
              :main acme.main}}
