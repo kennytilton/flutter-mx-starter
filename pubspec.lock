@@ -240,13 +240,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.0"
-  matrix:
-    dependency: "direct main"
-    description:
-      path: ".clojuredart/deps/f0d26e0fb9c1342eb8f77274162dff30b31e822809d111fa81bb8cadc113d6f3"
-      relative: true
-    source: path
-    version: "1.0.0+1"
   meta:
     dependency: transitive
     description:

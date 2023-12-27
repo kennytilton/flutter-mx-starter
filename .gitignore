@@ -57,3 +57,9 @@ app.*.map.json
 .clojuredart/
 lib/cljd-out/
 test/cljd-out/
+
+# ClojureDart
+.cpcache/
+.clojuredart/
+lib/cljd-out/
+test/cljd-out/
