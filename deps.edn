@@ -1,11 +1,11 @@
 {:paths     ["src"]                                         ; where your cljd files are
  :deps      {tensegritics/clojuredart
              {:git/url "https://github.com/tensegritics/ClojureDart.git"
-              :sha     "84df2e8d0062027fc1ceb96747ecbcd80a216a2b"}
+              :sha     "a6bff55cb69298d79869362e8026c65dafb4d417" #_"84df2e8d0062027fc1ceb96747ecbcd80a216a2b"}
              kennytilton/flutter-mx
              {:git/url "https://github.com/kennytilton/flutter-mx.git"
               ;; next must be an assetless f/mx SHA, else benign (?) errors thrown
-              :sha     "ca2725ad1f33fb8c190b89d8c3cd75eb1165b4df"}}
+              :sha     "314bba5320a79614e17373d05898c4f88020971e"}}
  :aliases   {:cljd {:main-opts ["-m" "cljd.build"]}}
  :cljd/opts {:kind :flutter
              :main acme.main}}
