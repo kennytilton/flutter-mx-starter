@@ -36,7 +36,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   matrix:
-    path: .clojuredart/deps/f10c8917af92d491bc6de51c22066f9e5fcdd3ca4bfcb423d5d6192691d37377
+    path: .clojuredart/deps/f3c49bb143b71cc3d57c46445ea1d1356cd52971ba1dcbaae8b910a704567c8c
 
 dev_dependencies:
   flutter_test:

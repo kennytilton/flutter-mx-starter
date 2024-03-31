@@ -5,7 +5,7 @@
              kennytilton/flutter-mx
              {:git/url "https://github.com/kennytilton/flutter-mx.git"
               ;; next must be an assetless f/mx SHA, else benign (?) errors thrown
-              :sha     "314bba5320a79614e17373d05898c4f88020971e"}}
+              :sha     "2c4642c30c3ebd1c0ee2ebcf596e9e60850353a9"}}
  :aliases   {:cljd {:main-opts ["-m" "cljd.build"]}}
  :cljd/opts {:kind :flutter
              :main acme.main}}
