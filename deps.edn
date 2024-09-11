@@ -1,7 +1,7 @@
-{:paths     ["src"]                                         ; where your cljd files are
+{:paths     ["src"]
  :deps      {tensegritics/clojuredart
              {:git/url "https://github.com/tensegritics/ClojureDart.git"
-              :sha     "a6bff55cb69298d79869362e8026c65dafb4d417" #_"84df2e8d0062027fc1ceb96747ecbcd80a216a2b"}
+              :sha     "4871523ecf30364faec4a54a7543f5299ad08534" #_"a6bff55cb69298d79869362e8026c65dafb4d417"}
              kennytilton/flutter-mx
              {:git/url "https://github.com/kennytilton/flutter-mx.git"
               ;; next must be an assetless f/mx SHA, else benign (?) errors thrown
